@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "hashAlgorithm": "sha256",
+  "entries": [
+    {
+      "path": "../outside.txt",
+      "kind": "file",
+      "executable": false,
+      "size": 1,
+      "contentSha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "name": "veil-core",
+  "version": "0.1.0",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "engines": { "node": ">=24 <25" },
+  "workspaces": ["packages/*"],
+  "scripts": {
+    "build": "npm run build --workspaces",
+    "test": "npm run test --workspaces",
+    "check:boundary": "node scripts/check-core-boundary.mjs",
+    "check:licenses": "node scripts/check-license-metadata.mjs",
+    "check:surface": "node scripts/check-public-surface.mjs"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "tsx": "^4.20.0",
+    "typescript": "5.9.3"
+  }
+}

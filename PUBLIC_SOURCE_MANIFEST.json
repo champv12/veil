@@ -1,0 +1,616 @@
+{
+  "version": 1,
+  "sourceCommit": "a448b51e4b8b720cd109277e6546321194015efe",
+  "files": [
+    {
+      "path": ".editorconfig",
+      "sha256": "76565420d6347129e8c1b99ae259c764efa836509053365541eacebc5c27e188",
+      "source": "public-owned"
+    },
+    {
+      "path": ".github/dependabot.yml",
+      "sha256": "33b5e73c36b8b5e5d12404c449c407b7a31917e91a6b6aebeada1ff9a54e1c0e",
+      "source": "public-owned"
+    },
+    {
+      "path": ".github/ISSUE_TEMPLATE/bug_report.yml",
+      "sha256": "a196289870c83491ceb3731b394fee47dc25d5d043521367bc2a385b594bacfe",
+      "source": "public-owned"
+    },
+    {
+      "path": ".github/ISSUE_TEMPLATE/config.yml",
+      "sha256": "6e53932538463340e013b0133d68ad29663849a8eb1f60e1f2832fddb87876ff",
+      "source": "public-owned"
+    },
+    {
+      "path": ".github/ISSUE_TEMPLATE/feature_request.yml",
+      "sha256": "51872298d54f6717f80ab40870902cd5806936e1c39dae473c6c02ac625ba4c2",
+      "source": "public-owned"
+    },
+    {
+      "path": ".github/pull_request_template.md",
+      "sha256": "b9cdb4c56e4202648bc23b2385463556839f15c3848e6f27ec22c48fffb44d98",
+      "source": "public-owned"
+    },
+    {
+      "path": ".github/workflows/ci.yml",
+      "sha256": "ac837edda060df8153e9c8f1396ad18028ef161e8ffb18a4d9df6e73d18b97b6",
+      "source": "public-owned"
+    },
+    {
+      "path": ".gitignore",
+      "sha256": "cd9afc00dc6d1744af5c059d050c3040acee60b07bc3072f0d460a25bd19651d",
+      "source": "public-owned"
+    },
+    {
+      "path": ".node-version",
+      "sha256": "55075b5ec4e8b31936cbbc282b8829116d1fd48f2f2f1856dee592a6650700ce",
+      "source": "public-owned"
+    },
+    {
+      "path": "CODE_OF_CONDUCT.md",
+      "sha256": "90141b55965b8aa85f6d56c9ad40cf489b841aefd3cfa8671dd69890919dea7d",
+      "source": "public-owned"
+    },
+    {
+      "path": "CONTRIBUTING.md",
+      "sha256": "d1cc8834658977975b270807b1ed7ff755bed80338d1dd0740e06162a8c65642",
+      "source": "public-owned"
+    },
+    {
+      "path": "DCO.txt",
+      "sha256": "b17a90184babfb1c6eba6647c267181df37f57b2808d588bc8f552cbce239a35",
+      "source": "public-owned"
+    },
+    {
+      "path": "docs/adr/003-phase-1-source-identity.md",
+      "blob": "cae241799f9a48667c46ccb1e464e2b0bda29079",
+      "source": "private-source"
+    },
+    {
+      "path": "docs/adr/007-source-bound-semantic-review.md",
+      "blob": "413af923727a3a068bea20c2b07c5642b2db6aad",
+      "source": "private-source"
+    },
+    {
+      "path": "docs/adr/008-unassigned-logical-change.md",
+      "blob": "6b283e70283e80a9a4a9431a78335a7a0b3783ec",
+      "source": "private-source"
+    },
+    {
+      "path": "docs/adr/009-ubuntu-bubblewrap-apparmor.md",
+      "blob": "dc5cf47524eea59b183fbe7b2ffd05f7f1985a8a",
+      "source": "private-source"
+    },
+    {
+      "path": "docs/adr/010-concurrent-logical-change-module.md",
+      "blob": "97d1213b0db0e17d22d7477c9108788c99bdb6d9",
+      "source": "private-source"
+    },
+    {
+      "path": "docs/architecture.md",
+      "blob": "f67d296d17f8f87f65bb555f9de78ed920956e5d",
+      "source": "private-source"
+    },
+    {
+      "path": "docs/execution-isolation.md",
+      "blob": "6971a9c116f9302b20c204cc087fffa0456f3a94",
+      "source": "private-source"
+    },
+    {
+      "path": "docs/product-boundary.md",
+      "blob": "fc5cfe1985a2935d8a065df44be15086ab8cdeef",
+      "source": "private-source"
+    },
+    {
+      "path": "docs/verification-recipes.md",
+      "blob": "47aaebf2ddbdf07c5877467eb901eb7b91fda4f2",
+      "source": "private-source"
+    },
+    {
+      "path": "GOVERNANCE.md",
+      "sha256": "3443229704a679a7f3ab0ff184dd40f02a337be7bab03eb132d3af30dc7bdc76",
+      "source": "public-owned"
+    },
+    {
+      "path": "LICENSE",
+      "sha256": "2ba29b23d0c9727a630c488aedd65cc3628da58037ea86d5aed687757e7d16c3",
+      "source": "public-owned"
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "ff8c5753ea9120929a7a3c64fb12b9e921e169d862e83ea34490ab7eb51a53c0",
+      "source": "public-owned"
+    },
+    {
+      "path": "package.json",
+      "sha256": "f964366924a987cfaa7c11c99dccd0382bc0b969e91fd0cc954bd90b26863d2a",
+      "source": "public-owned"
+    },
+    {
+      "path": "packages/agent-runner/package.json",
+      "sha256": "7c7a3b974ded44fb49b4ef30e7ab2cc8968cfce07f5afc02affdc7c1d8d92c81",
+      "source": "public-owned"
+    },
+    {
+      "path": "packages/agent-runner/src/index.ts",
+      "blob": "13fc69e8c84febd5ba7943fca038eb462f656701",
+      "source": "private-source"
+    },
+    {
+      "path": "packages/agent-runner/src/isolation.ts",
+      "blob": "891ed6658058094e3e74a8aea72ea2d11264c0c0",
+      "source": "private-source"
+    },
+    {
+      "path": "packages/agent-runner/src/runner.ts",
+      "blob": "1621b5bc14a90b57efc345a064d619415511df04",
+      "source": "private-source"
+    },
+    {
+      "path": "packages/agent-runner/src/schema.ts",
+      "blob": "fd2bbc059318a7c8d97ee81198de2abc045114fc",
+      "source": "private-source"
+    },
+    {
+      "path": "packages/agent-runner/src/types.ts",
+      "blob": "6b820889a39903f488e0000c3f8390b44a0e4b7a",
+      "source": "private-source"
+    },
+    {
+      "path": "packages/agent-runner/test/runner.test.ts",
+      "blob": "f8623ace02b98f857f6e67feb64623ff65076e90",
+      "source": "private-source"
+    },
+    {
+      "path": "packages/agent-runner/tsconfig.json",
+      "blob": "7869a1d852d5068debc3d06ffd635ade43fe0a94",
+      "source": "private-source"
+    },
+    {
+      "path": "packages/contracts/package.json",
+      "sha256": "63326dd96ceb388dd9e28af220f7bdeab5ccb77f0cf1a45853743bc9005e95d6",
+      "source": "public-owned"
+    },
+    {
+      "path": "packages/contracts/src/change-event.ts",
+      "blob": "f24e32b87e418dda91347e1b577bed730b4e62b3",
+      "source": "private-source"
+    },
+    {
+      "path": "packages/contracts/src/control-plane.ts",
+      "blob": "c2fc913e6139f15a2b71904f353cde6b6249cb5e",
+      "source": "private-source"
+    },
+    {
+      "path": "packages/contracts/src/index.ts",
+      "sha256": "e05a684858338b37405b332a5ec5fd006c86ad0415376ee4d232d43000673f04",
+      "source": "public-owned"
+    },
+    {
+      "path": "packages/contracts/src/runner-ipc.ts",
+      "blob": "fec2af0c710aeb6fce8670304d3389e704602f81",
+      "source": "private-source"
+    },
+    {
+      "path": "packages/contracts/src/semantic-review.ts",
+      "blob": "054159134a05917c1e4f5e8b27fa401f02041a18",
+      "source": "private-source"
+    },
+    {
+      "path": "packages/contracts/src/types.ts",
+      "blob": "6f203b338c2344d2378f710efcd1ffb50c3c356d",
+      "source": "private-source"
+    },
+    {
+      "path": "packages/contracts/src/validation.ts",
+      "blob": "8f08340e13bdbdd5e4388f0e461ae8bd03afb7a9",
+      "source": "private-source"
+    },
+    {
+      "path": "packages/contracts/src/workspace-tree.ts",
+      "blob": "c0c93aadc46636985f806127c37c42bf92f87c62",
+      "source": "private-source"
+    },
+    {
+      "path": "packages/contracts/test/change-event.test.ts",
+      "blob": "6710d6432387e44baac6f803d1911b494350dddc",
+      "source": "private-source"
+    },
+    {
+      "path": "packages/contracts/test/contracts.test.ts",
+      "blob": "771f92c02042d6823a34fe0447bb488c54a4ca56",
+      "source": "private-source"
+    },
+    {
+      "path": "packages/contracts/test/fixtures/workspace-tree/duplicate-path.json",
+      "blob": "d59335030918be4954e8405ab0334e5924746f18",
+      "source": "private-source"
+    },
+    {
+      "path": "packages/contracts/test/fixtures/workspace-tree/git-state-field.json",
+      "blob": "406b281b6ed49c67566c3e3e2c6bbc3c827638b5",
+      "source": "private-source"
+    },
+    {
+      "path": "packages/contracts/test/fixtures/workspace-tree/invalid-manifests.json",
+      "blob": "f4d6410fc203a93e01966c924f5779ed02dbb163",
+      "source": "private-source"
+    },
+    {
+      "path": "packages/contracts/test/fixtures/workspace-tree/ordinary-files.json",
+      "blob": "8a77c630a801a31112872ba01b93e213a2bd7d48",
+      "source": "private-source"
+    },
+    {
+      "path": "packages/contracts/test/fixtures/workspace-tree/unsafe-path.json",
+      "blob": "ad4cfc7a43f4b99d9595e200312d2c845870298b",
+      "source": "private-source"
+    },
+    {
+      "path": "packages/contracts/test/runner-ipc.test.ts",
+      "blob": "a8cf36e9b239bda14ae4449452a35249a4d0b993",
+      "source": "private-source"
+    },
+    {
+      "path": "packages/contracts/test/semantic-review.test.ts",
+      "blob": "af6f53c07a24afdf1f2e49cc65d163bfd4d187e9",
+      "source": "private-source"
+    },
+    {
+      "path": "packages/contracts/test/workspace-tree.test.ts",
+      "blob": "bd5b95d53ca6f3621a948938047796131a73f656",
+      "source": "private-source"
+    },
+    {
+      "path": "packages/contracts/tsconfig.json",
+      "blob": "f1b4316d8fd519550b1a88a99c4bacd6503bd2f7",
+      "source": "private-source"
+    },
+    {
+      "path": "packages/engine/package.json",
+      "sha256": "ea644427d540b4778cbf577ce232efb21511a2f3bbe53849277dd07b83e4b5df",
+      "source": "public-owned"
+    },
+    {
+      "path": "packages/engine/README.md",
+      "blob": "8bf5fc7a113593c38126afc21b1853a59433e9e8",
+      "source": "private-source"
+    },
+    {
+      "path": "packages/engine/src/cleanup.ts",
+      "blob": "5687069fcb3113accddc27301eb67f2375b71d68",
+      "source": "private-source"
+    },
+    {
+      "path": "packages/engine/src/crypto.ts",
+      "blob": "5f8cbf6b4e206ee8613c5a7b038017605e81f0d5",
+      "source": "private-source"
+    },
+    {
+      "path": "packages/engine/src/event-store.ts",
+      "blob": "a1adca6298fb46cde32f9e4d9260cde6138cac85",
+      "source": "private-source"
+    },
+    {
+      "path": "packages/engine/src/index.ts",
+      "blob": "96bab39523c78d1bd97007e609939c8b9c3aef21",
+      "source": "private-source"
+    },
+    {
+      "path": "packages/engine/src/local-engine.ts",
+      "blob": "a5fc350d35c4d1ab2a72a0e257de606e6cd029d2",
+      "source": "private-source"
+    },
+    {
+      "path": "packages/engine/src/logical-change-module.ts",
+      "blob": "80a9816a102746ec77f43069c54527d15adb3a9a",
+      "source": "private-source"
+    },
+    {
+      "path": "packages/engine/src/manual-view.ts",
+      "blob": "57036e57a5c2c7b7988ea6522ed0d719ffeeae76",
+      "source": "private-source"
+    },
+    {
+      "path": "packages/engine/src/manual-workspace-registry.ts",
+      "blob": "99a783c6be4654db14dc394a4df25fa25bfb5b23",
+      "source": "private-source"
+    },
+    {
+      "path": "packages/engine/src/snapshot.ts",
+      "blob": "eecd024e6eb45a7fcd6242d4f465f2464380c876",
+      "source": "private-source"
+    },
+    {
+      "path": "packages/engine/src/state-machine.ts",
+      "blob": "e2a4c3b9d3ac19b6b02b7493215197152a73e02a",
+      "source": "private-source"
+    },
+    {
+      "path": "packages/engine/src/util.ts",
+      "blob": "496afd85f5b7054ce1520af83096916bc81a2023",
+      "source": "private-source"
+    },
+    {
+      "path": "packages/engine/test/engine.test.ts",
+      "blob": "63ec6f07e4f3a661a56bfd16dcb67ec0d3c8476d",
+      "source": "private-source"
+    },
+    {
+      "path": "packages/engine/test/logical-change-module.test.ts",
+      "blob": "a0db69f5e5e48227fc19bebf948ce3b290a52a85",
+      "source": "private-source"
+    },
+    {
+      "path": "packages/engine/test/workspace-tree.test.ts",
+      "blob": "684f0bd15bcd8f763668666c6b48ce758d771a4a",
+      "source": "private-source"
+    },
+    {
+      "path": "packages/engine/tsconfig.check.json",
+      "blob": "8659475a49cb6949254ac92f4eee3566bbef2bda",
+      "source": "private-source"
+    },
+    {
+      "path": "packages/engine/tsconfig.json",
+      "blob": "91bdbe41c6c0f6b0cc22bf7a64447c5d5317d4ec",
+      "source": "private-source"
+    },
+    {
+      "path": "packages/evaluator/package.json",
+      "sha256": "fafef0c697c02f4ad82110aff763982758dc49db98acdf253883c24133ff8543",
+      "source": "public-owned"
+    },
+    {
+      "path": "packages/evaluator/README.md",
+      "blob": "46b8a6bd32abe4e669c4ae74a15f5dd5ae94739e",
+      "source": "private-source"
+    },
+    {
+      "path": "packages/evaluator/src/docker.ts",
+      "blob": "e7b92e2758efdf53b6e9eb5de87d2a659deb39e2",
+      "source": "private-source"
+    },
+    {
+      "path": "packages/evaluator/src/evaluate.ts",
+      "blob": "bdee0f9953af67fcd2d630934dc4497250b87730",
+      "source": "private-source"
+    },
+    {
+      "path": "packages/evaluator/src/filesystem.ts",
+      "blob": "4a564ee26985b83ee8983414614afbaae02b06c1",
+      "source": "private-source"
+    },
+    {
+      "path": "packages/evaluator/src/index.ts",
+      "blob": "0ddbb500fdd54991b53857af78543f694ac460c9",
+      "source": "private-source"
+    },
+    {
+      "path": "packages/evaluator/src/native.ts",
+      "blob": "52465a25e38186ca45c5253de12d8854c36ba505",
+      "source": "private-source"
+    },
+    {
+      "path": "packages/evaluator/src/plan.ts",
+      "blob": "c3ba63ec39fd2360e5c6e439c3847de70cc8d0ad",
+      "source": "private-source"
+    },
+    {
+      "path": "packages/evaluator/src/private-suite.ts",
+      "blob": "ce3c40093cf96f87b15b0b532aeccdc3665f0976",
+      "source": "private-source"
+    },
+    {
+      "path": "packages/evaluator/src/types.ts",
+      "blob": "b4fce72260fe21e4222dc89ae6f66f8d5d205925",
+      "source": "private-source"
+    },
+    {
+      "path": "packages/evaluator/test/evaluator.test.ts",
+      "blob": "891f7fab238d24415e2ee664fa8f0d4b99ebb645",
+      "source": "private-source"
+    },
+    {
+      "path": "packages/evaluator/tsconfig.json",
+      "blob": "fb2e3e8a208a5915b8ce2bfc987c841b8f80493c",
+      "source": "private-source"
+    },
+    {
+      "path": "packages/evidence/package.json",
+      "sha256": "adfea65228977d65534238e235fb7961586c37d462e24d72f28f696b2b7d16fa",
+      "source": "public-owned"
+    },
+    {
+      "path": "packages/evidence/src/attestation.ts",
+      "blob": "03315affb969d3ea72e0da4e682018d3d06a9e76",
+      "source": "private-source"
+    },
+    {
+      "path": "packages/evidence/src/index.ts",
+      "blob": "4603e63b511cf0a5f381485fc9987262fe921afb",
+      "source": "private-source"
+    },
+    {
+      "path": "packages/evidence/src/leak-scan.ts",
+      "blob": "c82985f85b2112d09ff06f87babd7d8399669ea5",
+      "source": "private-source"
+    },
+    {
+      "path": "packages/evidence/src/program-flow.ts",
+      "blob": "48b5bd6f7d2952de4464f23817f1b8628aa31ce3",
+      "source": "private-source"
+    },
+    {
+      "path": "packages/evidence/src/redact.ts",
+      "blob": "16ab08cda450f3fdf6ee1dd3e28610844953ee62",
+      "source": "private-source"
+    },
+    {
+      "path": "packages/evidence/src/report.ts",
+      "blob": "112b29954badd3a3f45a9a6ed5ac25ae6d7c6453",
+      "source": "private-source"
+    },
+    {
+      "path": "packages/evidence/src/semantic-review.ts",
+      "blob": "e7261ca2ca3b2d3e5ede4281be06315c65079378",
+      "source": "private-source"
+    },
+    {
+      "path": "packages/evidence/test/evidence.test.ts",
+      "blob": "30e0eec102cf2a503900578384bb0ee169eb61ab",
+      "source": "private-source"
+    },
+    {
+      "path": "packages/evidence/test/program-flow-coverage.test.ts",
+      "blob": "0099e8732eec9e10fd2baabbf62fcf88013f69a8",
+      "source": "private-source"
+    },
+    {
+      "path": "packages/evidence/tsconfig.check.json",
+      "blob": "8659475a49cb6949254ac92f4eee3566bbef2bda",
+      "source": "private-source"
+    },
+    {
+      "path": "packages/evidence/tsconfig.json",
+      "blob": "91bdbe41c6c0f6b0cc22bf7a64447c5d5317d4ec",
+      "source": "private-source"
+    },
+    {
+      "path": "packages/git-adapter/package.json",
+      "sha256": "36c1aecdbeb12a74a9b5cd61a79a0c0ba6464062578499c17771bbb090ba3c12",
+      "source": "public-owned"
+    },
+    {
+      "path": "packages/git-adapter/src/durable-publication-store.ts",
+      "blob": "30319f256d8439f0d0b9a27086fed5f1a88e358f",
+      "source": "private-source"
+    },
+    {
+      "path": "packages/git-adapter/src/git-context.ts",
+      "blob": "15fb542b78a593cddba49ef676afb2712727f92c",
+      "source": "private-source"
+    },
+    {
+      "path": "packages/git-adapter/src/git.ts",
+      "blob": "22f97bec63f4af2b9141669413e54cb2b164e4c0",
+      "source": "private-source"
+    },
+    {
+      "path": "packages/git-adapter/src/index.ts",
+      "blob": "72ef2c867f6a885a3a7cfe0c2ed997b470b79149",
+      "source": "private-source"
+    },
+    {
+      "path": "packages/git-adapter/src/publication-coordinator.ts",
+      "blob": "78eb78529f61f8f5dc1ae6e9de7a92cbacea1b90",
+      "source": "private-source"
+    },
+    {
+      "path": "packages/git-adapter/src/publication.ts",
+      "blob": "01ee6674c8b053382cd9da2592546af34f7958ec",
+      "source": "private-source"
+    },
+    {
+      "path": "packages/git-adapter/src/reconciliation.ts",
+      "blob": "65c75a5af8f3165ba61eb64855394501522f56e4",
+      "source": "private-source"
+    },
+    {
+      "path": "packages/git-adapter/src/tree.ts",
+      "blob": "760bfcf24890f80a086c994576742c082fcdb0fd",
+      "source": "private-source"
+    },
+    {
+      "path": "packages/git-adapter/src/work-fragments.ts",
+      "blob": "453a2d20b5e16a7f05c6839d36602b1f1ad38867",
+      "source": "private-source"
+    },
+    {
+      "path": "packages/git-adapter/test/durable-publication-store.test.ts",
+      "blob": "eb7f75860cbad42cd971d88955839a94eb614958",
+      "source": "private-source"
+    },
+    {
+      "path": "packages/git-adapter/test/git.test.ts",
+      "blob": "40c7c26dfc6c15b2fc38d01b856e2e0639f3b02f",
+      "source": "private-source"
+    },
+    {
+      "path": "packages/git-adapter/test/integration-reconcile.test.ts",
+      "blob": "d1d2333ec44327a653d4da101e985657814944f1",
+      "source": "private-source"
+    },
+    {
+      "path": "packages/git-adapter/test/reconciliation.test.ts",
+      "blob": "408bf2ad346e02edeb02f07b9d5c2634f0012b7e",
+      "source": "private-source"
+    },
+    {
+      "path": "packages/git-adapter/test/work-fragments.test.ts",
+      "blob": "1539aca8e899fe048fdee23868d8b046cfee116f",
+      "source": "private-source"
+    },
+    {
+      "path": "packages/git-adapter/tsconfig.json",
+      "blob": "fb2e3e8a208a5915b8ce2bfc987c841b8f80493c",
+      "source": "private-source"
+    },
+    {
+      "path": "README.md",
+      "sha256": "7b501f6561bc76193b10ce800d1ea88e82359093893926cebfeb354c45f57a6b",
+      "source": "public-owned"
+    },
+    {
+      "path": "ROADMAP.md",
+      "sha256": "f597769a7db77917066ff4642cc2ae843cf568189dbc9759df3b65e92f68d040",
+      "source": "public-owned"
+    },
+    {
+      "path": "scripts/check-core-boundary.mjs",
+      "sha256": "941a402a5f4f6d21af66c4bcd237c5c8041f79ed99719879d9faf90c6630c8b1",
+      "source": "public-owned"
+    },
+    {
+      "path": "scripts/check-license-metadata.mjs",
+      "sha256": "2f52f6557f8b68b37be5636c7fc5c8803b7aff00c5a7bc36c8c132c4567900ae",
+      "source": "public-owned"
+    },
+    {
+      "path": "scripts/check-public-surface.mjs",
+      "sha256": "f1a2221aa6023d551e7e8ffda3ae389f4c5c7914331212413913fa0a41e16ae7",
+      "source": "public-owned"
+    },
+    {
+      "path": "scripts/license-notices.mjs",
+      "sha256": "6c2531b8c1103418eda1a8aa7a9f8146432cbddf3d6c26a31f32e1661c891c61",
+      "source": "public-owned"
+    },
+    {
+      "path": "SECURITY.md",
+      "sha256": "e7c69824ade0398e60060e0e50b20b17490a800b004ab5a009f407e72e008b9d",
+      "source": "public-owned"
+    },
+    {
+      "path": "SUPPORT.md",
+      "sha256": "38b2b48599de4e7f231abfa923da07ba4eb1084821e3999e8ada012922bbebf0",
+      "source": "public-owned"
+    },
+    {
+      "path": "THIRD_PARTY_NOTICES.md",
+      "sha256": "57d8324ef156bf4661de9842eff5c9c8fed2757aefa96eac4f80442275ff090b",
+      "source": "public-owned"
+    },
+    {
+      "path": "TRADEMARKS.md",
+      "sha256": "34c59fb0d3e4a0d52db82713a119561254da47f48da893809157cc312c8e6c13",
+      "source": "public-owned"
+    },
+    {
+      "path": "tsconfig.base.json",
+      "blob": "2a6cb14335f952f89d4cfaa6fd5964f86ad00dc8",
+      "source": "private-source"
+    }
+  ]
+}

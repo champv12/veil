@@ -1,0 +1,15 @@
+name: Bug report
+description: Report a reproducible Veil Core problem.
+body:
+  - type: textarea
+    id: problem
+    attributes: { label: What happened? }
+    validations: { required: true }
+  - type: textarea
+    id: reproduce
+    attributes: { label: Reproduction }
+    validations: { required: true }
+  - type: input
+    id: version
+    attributes: { label: Version and environment }
+    validations: { required: true }

@@ -1,0 +1,7 @@
+Developer Certificate of Origin
+
+By making a contribution, I certify that I have the right to submit it under
+the project's open-source license and understand that it is public and may be
+redistributed under that license. Sign commits with `git commit -s`.
+
+Canonical DCO text: https://developercertificate.org/

@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "hashAlgorithm": "sha256",
+  "entries": [
+    {
+      "path": "scripts/build.sh",
+      "kind": "file",
+      "executable": true,
+      "size": 24,
+      "contentSha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    },
+    {
+      "path": "README.md",
+      "kind": "file",
+      "executable": false,
+      "size": 12,
+      "contentSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  ]
+}

@@ -1,0 +1,1 @@
+{"name":"@veil/evidence","version":"0.1.0","license":"MIT","type":"module","exports":{".":{"types":"./dist/src/index.d.ts","default":"./dist/src/index.js"}},"scripts":{"build":"tsc -p tsconfig.json","test":"tsx --test test/**/*.test.ts"},"dependencies":{"@veil/contracts":"0.1.0","typescript":"5.9.3"}}
