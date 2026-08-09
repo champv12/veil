@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "sourceCommit": "70dd5a207480d0fba305ad58c061c4a3f2f95e32",
+  "sourceCommit": "4ed6fe628a25dee259134a845099b430020d4893",
   "files": [
     {
       "path": ".editorconfig",
@@ -509,7 +509,7 @@
     },
     {
       "path": "packages/git-adapter/src/publication.ts",
-      "blob": "47eb68ca34c89dc3a453e9399b6944726f1497f4",
+      "blob": "a2e16ee8815f24205f1e229fcb6d59ad075c840e",
       "source": "private-source"
     },
     {
@@ -534,7 +534,7 @@
     },
     {
       "path": "packages/git-adapter/test/git.test.ts",
-      "blob": "8a8cd5a4bbcc391bb399479a015c6bd065f645aa",
+      "blob": "a573276698fdadf0a60c5d4fc8725eb3f4409ee2",
       "source": "private-source"
     },
     {

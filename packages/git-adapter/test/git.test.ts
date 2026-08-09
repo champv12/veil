@@ -98,6 +98,11 @@ if (process.env.GH_TOKEN !== "rehearsal-token") {
 if (process.env.GITHUB_TOKEN || process.env.OPENAI_API_KEY) process.exit(44);
 if (!process.argv.includes("credential.https://github.com.helper=!gh auth git-credential")) process.exit(45);
 if (!process.argv.includes("push") && !process.argv.includes("ls-remote")) process.exit(43);
+if (process.argv.includes("ls-remote") && process.argv.at(-1) === "main") {
+  const lsRemoteIndex = process.argv.indexOf("ls-remote");
+  if (JSON.stringify(process.argv.slice(lsRemoteIndex)) !== JSON.stringify(["ls-remote", "--heads", "origin", "main"])) process.exit(48);
+  process.stdout.write("${"c".repeat(40)}\\trefs/heads/main\\n");
+}
 `);
     await writeFile(fakeGh, `#!/usr/bin/env node
 if (process.env.GH_TOKEN !== "rehearsal-token") process.exit(42);
@@ -133,6 +138,21 @@ process.stdout.write("https://github.com/champv12/veil-rehearsal-fixture/pull/1\
       repositoryUrl: "https://github.com/champv12/veil-rehearsal-fixture",
       branch: "veil/rehearsal-token-test",
     });
+    await assert.rejects(localGhPublicationAuthorization.observeIntegrationHead({
+      cwd: root,
+      repositoryUrl: "https://github.com/champv12/veil-rehearsal-fixture",
+      baseBranch: "../main",
+    }), /safe/);
+    await assert.rejects(localGhPublicationAuthorization.observeBranch({
+      cwd: root,
+      repositoryUrl: "https://github.com/champv12/veil-rehearsal-fixture",
+      branch: "feature/not-veil",
+    }), /safe veil/);
+    assert.equal(await localGhPublicationAuthorization.observeIntegrationHead({
+      cwd: root,
+      repositoryUrl: "https://github.com/champv12/veil-rehearsal-fixture",
+      baseBranch: "main",
+    }), "c".repeat(40));
     assert.deepEqual(await localGhPublicationAuthorization.findPullRequest({
       cwd: root,
       repositoryUrl: "https://github.com/champv12/veil-rehearsal-fixture",

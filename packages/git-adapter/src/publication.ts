@@ -279,6 +279,11 @@ export function authenticatedGitHubPushArgs(branch: string): string[] {
 
 export function authenticatedGitHubLsRemoteArgs(branch: string): string[] {
   assertSafePublicationBranch(branch);
+  return authenticatedGitHubLsRemoteRefArgs(branch);
+}
+
+function authenticatedGitHubLsRemoteRefArgs(branch: string): string[] {
+  assertSafeGitRef(branch, "remote branch");
   return [
     "-c",
     "credential.https://github.com.helper=",
@@ -310,7 +315,7 @@ export const localGhPublicationAuthorization: PublicationAuthorizationAdapter = 
     return assertGitObjectId(match[1]!, "remote publication commit");
   },
   async observeIntegrationHead({ cwd, baseBranch }) {
-    const observed = await runCommand("git", authenticatedGitHubLsRemoteArgs(baseBranch), { cwd, env: githubPublicationEnvironment() });
+    const observed = await runCommand("git", authenticatedGitHubLsRemoteRefArgs(baseBranch), { cwd, env: githubPublicationEnvironment() });
     const line = observed.stdout.trim();
     if (!line) return null;
     const match = /^([0-9a-f]{40,64})\s+refs\/heads\/.+$/.exec(line);
