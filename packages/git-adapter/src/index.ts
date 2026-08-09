@@ -24,6 +24,7 @@ export {
 } from "./publication.js";
 export {
   DurablePublicationCoordinator,
+  PublicationObservationIntegrityError,
   type DurablePublicationBasis,
   type DurablePublicationRecord,
   type DurablePublicationState,

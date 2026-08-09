@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "sourceCommit": "a448b51e4b8b720cd109277e6546321194015efe",
+  "sourceCommit": "4ed6fe628a25dee259134a845099b430020d4893",
   "files": [
     {
       "path": ".editorconfig",
@@ -499,17 +499,17 @@
     },
     {
       "path": "packages/git-adapter/src/index.ts",
-      "blob": "72ef2c867f6a885a3a7cfe0c2ed997b470b79149",
+      "blob": "6a7362b3d71cabab9d5db23b83657904d36caf0d",
       "source": "private-source"
     },
     {
       "path": "packages/git-adapter/src/publication-coordinator.ts",
-      "blob": "78eb78529f61f8f5dc1ae6e9de7a92cbacea1b90",
+      "blob": "c1bf1ad0af295fecc2825657d8e4584e8cd52886",
       "source": "private-source"
     },
     {
       "path": "packages/git-adapter/src/publication.ts",
-      "blob": "01ee6674c8b053382cd9da2592546af34f7958ec",
+      "blob": "a2e16ee8815f24205f1e229fcb6d59ad075c840e",
       "source": "private-source"
     },
     {
@@ -534,7 +534,7 @@
     },
     {
       "path": "packages/git-adapter/test/git.test.ts",
-      "blob": "40c7c26dfc6c15b2fc38d01b856e2e0639f3b02f",
+      "blob": "a573276698fdadf0a60c5d4fc8725eb3f4409ee2",
       "source": "private-source"
     },
     {
@@ -559,7 +559,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "7b501f6561bc76193b10ce800d1ea88e82359093893926cebfeb354c45f57a6b",
+      "sha256": "d42aa82c5fd5929f902959d70432f2cca559785a6a2d4c0d9d7dd45d798d2f6e",
       "source": "public-owned"
     },
     {

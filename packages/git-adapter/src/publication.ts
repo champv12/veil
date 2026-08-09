@@ -14,6 +14,7 @@ import {
 } from "./git.js";
 import {
   DurablePublicationCoordinator,
+  PublicationObservationIntegrityError,
   type DurablePublicationBasis,
   type DurablePublicationRecord,
   type DurablePublicationStore,
@@ -278,6 +279,11 @@ export function authenticatedGitHubPushArgs(branch: string): string[] {
 
 export function authenticatedGitHubLsRemoteArgs(branch: string): string[] {
   assertSafePublicationBranch(branch);
+  return authenticatedGitHubLsRemoteRefArgs(branch);
+}
+
+function authenticatedGitHubLsRemoteRefArgs(branch: string): string[] {
+  assertSafeGitRef(branch, "remote branch");
   return [
     "-c",
     "credential.https://github.com.helper=",
@@ -309,7 +315,7 @@ export const localGhPublicationAuthorization: PublicationAuthorizationAdapter = 
     return assertGitObjectId(match[1]!, "remote publication commit");
   },
   async observeIntegrationHead({ cwd, baseBranch }) {
-    const observed = await runCommand("git", authenticatedGitHubLsRemoteArgs(baseBranch), { cwd, env: githubPublicationEnvironment() });
+    const observed = await runCommand("git", authenticatedGitHubLsRemoteRefArgs(baseBranch), { cwd, env: githubPublicationEnvironment() });
     const line = observed.stdout.trim();
     if (!line) return null;
     const match = /^([0-9a-f]{40,64})\s+refs\/heads\/.+$/.exec(line);
@@ -324,17 +330,49 @@ export const localGhPublicationAuthorization: PublicationAuthorizationAdapter = 
   },
   async findPullRequest({ cwd, repositoryUrl, branch, marker }) {
     const repository = parsePublicGitHubUrl(repositoryUrl);
-    const result = await runCommand("gh", ["pr", "list", "--repo", `${repository.owner}/${repository.repository}`, "--head", branch, "--state", "all", "--limit", "20", "--json", "url,state,headRefOid,body"], { cwd, allowFailure: true, env: githubPublicationEnvironment() });
-    if (result.exitCode !== 0) throw new Error("Unable to observe the publication pull request");
-    const rows = JSON.parse(result.stdout) as unknown;
-    if (!Array.isArray(rows)) throw new Error("Publication pull request response is invalid");
-    const matches = rows.filter((row): row is { url: string; state: "OPEN" | "CLOSED" | "MERGED"; headRefOid: string; body: string } => {
-      if (!row || typeof row !== "object" || Array.isArray(row)) return false;
+    const result = await runCommand("gh", [
+      "api",
+      "--method", "GET",
+      `repos/${repository.owner}/${repository.repository}/pulls`,
+      "-f", `head=${repository.owner}:${branch}`,
+      "-f", "state=all",
+      "-f", "per_page=20",
+      "--paginate",
+      "--slurp",
+    ], { cwd, allowFailure: true, env: githubPublicationEnvironment() });
+    if (result.exitCode !== 0) throw new Error("Unable to observe the publication pull request through GitHub REST");
+    let pages: unknown;
+    try { pages = JSON.parse(result.stdout); }
+    catch { throw new PublicationObservationIntegrityError(); }
+    if (!Array.isArray(pages) || pages.some((page) => !Array.isArray(page))) {
+      throw new PublicationObservationIntegrityError();
+    }
+    const rows = pages.flat();
+    const matches: Array<{ url: string; state: "OPEN" | "CLOSED" | "MERGED"; headCommit: string }> = [];
+    for (const row of rows) {
+      if (!row || typeof row !== "object" || Array.isArray(row)) throw new PublicationObservationIntegrityError();
       const item = row as Record<string, unknown>;
-      return typeof item.url === "string" && ["OPEN", "CLOSED", "MERGED"].includes(String(item.state)) && typeof item.headRefOid === "string" && typeof item.body === "string" && item.body.includes(marker);
-    });
-    if (matches.length > 1) throw new Error("Multiple pull requests match the Veil publication marker");
-    return matches[0] ? { url: matches[0].url, state: matches[0].state, headCommit: assertGitObjectId(matches[0].headRefOid, "pull request head commit") } : null;
+      const head = item.head;
+      if (
+        typeof item.html_url !== "string"
+        || (item.state !== "open" && item.state !== "closed")
+        || !head || typeof head !== "object" || Array.isArray(head)
+        || typeof (head as Record<string, unknown>).sha !== "string"
+        || (item.body !== null && typeof item.body !== "string")
+        || (item.merged_at !== null && typeof item.merged_at !== "string")
+      ) throw new PublicationObservationIntegrityError();
+      if (typeof item.body !== "string" || !item.body.includes(marker)) continue;
+      let headCommit: string;
+      try { headCommit = assertGitObjectId((head as Record<string, unknown>).sha as string, "pull request head commit"); }
+      catch { throw new PublicationObservationIntegrityError(); }
+      matches.push({
+        url: item.html_url,
+        state: typeof item.merged_at === "string" ? "MERGED" : item.state === "open" ? "OPEN" : "CLOSED",
+        headCommit,
+      });
+    }
+    if (matches.length > 1) throw new PublicationObservationIntegrityError();
+    return matches[0] ?? null;
   },
   async createDraftPullRequest({ cwd, repositoryUrl, branch, baseBranch, title, patchSha256, marker }) {
     const repository = parsePublicGitHubUrl(repositoryUrl);

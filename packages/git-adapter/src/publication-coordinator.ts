@@ -80,6 +80,13 @@ export interface GitHubPublicationStateAdapter {
   }): Promise<string>;
 }
 
+export class PublicationObservationIntegrityError extends Error {
+  constructor() {
+    super("GitHub publication observation failed integrity validation");
+    this.name = "PublicationObservationIntegrityError";
+  }
+}
+
 export interface PrepareDurablePublicationInput {
   id: string;
   changeId: string;
@@ -195,7 +202,18 @@ export class DurablePublicationCoordinator {
       return this.#reconcileLocked(publicationId, input.currentBasisId);
     }
 
-    let observed = await this.#remote.observe(remoteInput(record));
+    let observed: ObservedGitHubPublication;
+    try {
+      observed = await this.#remote.observe(remoteInput(record));
+    } catch (error) {
+      record.state = error instanceof PublicationObservationIntegrityError ? "blocked" : "reconciling";
+      record.updatedAt = this.#now();
+      record.lastError = error instanceof PublicationObservationIntegrityError
+        ? error.message
+        : "Initial GitHub publication observation failed";
+      await this.#store.save(record);
+      return structuredClone(record);
+    }
     const reconciled = this.#applyObservation(record, observed);
     if (reconciled.state === "blocked" || reconciled.state === "delivered" || reconciled.state === "published") {
       await this.#store.save(reconciled);
@@ -217,7 +235,17 @@ export class DurablePublicationCoordinator {
       }
     }
 
-    observed = await this.#remote.observe(remoteInput(record));
+    try {
+      observed = await this.#remote.observe(remoteInput(record));
+    } catch (error) {
+      record.state = error instanceof PublicationObservationIntegrityError ? "blocked" : "reconciling";
+      record.updatedAt = this.#now();
+      record.lastError = error instanceof PublicationObservationIntegrityError
+        ? "Post-effect GitHub publication observation failed integrity validation"
+        : "Post-effect GitHub publication observation failed";
+      await this.#store.save(record);
+      return structuredClone(record);
+    }
     this.#applyObservation(record, observed);
     if ((record as DurablePublicationRecord).state === "blocked") {
       await this.#store.save(record);
@@ -266,7 +294,18 @@ export class DurablePublicationCoordinator {
       await this.#store.save(record);
       return structuredClone(record);
     }
-    const observed = await this.#remote.observe(remoteInput(record));
+    let observed: ObservedGitHubPublication;
+    try {
+      observed = await this.#remote.observe(remoteInput(record));
+    } catch (error) {
+      record.state = error instanceof PublicationObservationIntegrityError ? "blocked" : "reconciling";
+      record.updatedAt = this.#now();
+      record.lastError = error instanceof PublicationObservationIntegrityError
+        ? "Reconciliation GitHub publication observation failed integrity validation"
+        : "GitHub publication reconciliation observation failed";
+      await this.#store.save(record);
+      return structuredClone(record);
+    }
     this.#applyObservation(record, observed);
     record.updatedAt = this.#now();
     await this.#store.save(record);
