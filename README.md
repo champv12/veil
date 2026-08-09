@@ -19,3 +19,7 @@ npm test
 ```
 
 Read [CONTRIBUTING.md](CONTRIBUTING.md) before opening a pull request.
+
+## Support the project
+
+[Support Veil on Buy Me a Coffee](https://buymeacoffee.com/champv12).
