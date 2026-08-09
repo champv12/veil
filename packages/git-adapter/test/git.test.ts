@@ -19,6 +19,7 @@ import {
   publishPreparedCandidate,
   preparePublication,
   DurablePublicationCoordinator,
+  PublicationObservationIntegrityError,
   AuthenticatedFileDurablePublicationStore,
   readOnlyGitContext,
   runCommand,
@@ -101,6 +102,22 @@ if (!process.argv.includes("push") && !process.argv.includes("ls-remote")) proce
     await writeFile(fakeGh, `#!/usr/bin/env node
 if (process.env.GH_TOKEN !== "rehearsal-token") process.exit(42);
 if (process.env.GITHUB_TOKEN || process.env.OPENAI_API_KEY) process.exit(44);
+if (process.argv[2] === "api") {
+  if (!process.argv.includes("repos/champv12/veil-rehearsal-fixture/pulls")) process.exit(46);
+  for (const value of ["--method", "GET", "--paginate", "--slurp", "head=champv12:veil/rehearsal-token-test", "state=all", "per_page=20"])
+    if (!process.argv.includes(value)) process.exit(47);
+  const firstPage = Array.from({ length: 20 }, (_, index) => ({
+    html_url: "https://github.com/champv12/veil-rehearsal-fixture/pull/" + (index + 10),
+    state: "closed", merged_at: null, head: { sha: "${"b".repeat(40)}" }, body: "unrelated",
+  }));
+  const secondPage = [
+    { html_url: "https://github.com/champv12/veil-rehearsal-fixture/pull/1", state: "open", merged_at: null, head: { sha: "${"e".repeat(40)}" }, body: "<!-- veil-publication:test -->" },
+    { html_url: "https://github.com/champv12/veil-rehearsal-fixture/pull/2", state: "closed", merged_at: null, head: { sha: "${"f".repeat(40)}" }, body: "<!-- veil-publication:closed -->" },
+    { html_url: "https://github.com/champv12/veil-rehearsal-fixture/pull/3", state: "closed", merged_at: "2026-08-09T00:00:00Z", head: { sha: "${"a".repeat(40)}" }, body: "<!-- veil-publication:merged -->" },
+  ];
+  process.stdout.write(JSON.stringify([firstPage, secondPage]) + "\\n");
+  process.exit(0);
+}
 if (process.argv[2] !== "pr" || process.argv[3] !== "create") process.exit(43);
 process.stdout.write("https://github.com/champv12/veil-rehearsal-fixture/pull/1\\n");
 `);
@@ -116,6 +133,28 @@ process.stdout.write("https://github.com/champv12/veil-rehearsal-fixture/pull/1\
       repositoryUrl: "https://github.com/champv12/veil-rehearsal-fixture",
       branch: "veil/rehearsal-token-test",
     });
+    assert.deepEqual(await localGhPublicationAuthorization.findPullRequest({
+      cwd: root,
+      repositoryUrl: "https://github.com/champv12/veil-rehearsal-fixture",
+      branch: "veil/rehearsal-token-test",
+      marker: "veil-publication:test",
+    }), {
+      url: "https://github.com/champv12/veil-rehearsal-fixture/pull/1",
+      state: "OPEN",
+      headCommit: "e".repeat(40),
+    });
+    assert.equal((await localGhPublicationAuthorization.findPullRequest({
+      cwd: root,
+      repositoryUrl: "https://github.com/champv12/veil-rehearsal-fixture",
+      branch: "veil/rehearsal-token-test",
+      marker: "veil-publication:closed",
+    }))?.state, "CLOSED");
+    assert.equal((await localGhPublicationAuthorization.findPullRequest({
+      cwd: root,
+      repositoryUrl: "https://github.com/champv12/veil-rehearsal-fixture",
+      branch: "veil/rehearsal-token-test",
+      marker: "veil-publication:merged",
+    }))?.state, "MERGED");
     await localGhPublicationAuthorization.push({
       cwd: root,
       repositoryUrl: "https://github.com/champv12/veil-rehearsal-fixture",
@@ -253,10 +292,12 @@ test("durable publication resumes ambiguous push and PR creation without duplica
   let pullRequest: ObservedGitHubPublication["pullRequest"];
   let pushes = 0;
   let pullRequests = 0;
+  let failInitialObservation = true;
   let failPushAfterEffect = true;
   let failPullRequestAfterEffect = true;
   const remote: GitHubPublicationStateAdapter = {
     async observe() {
+      if (failInitialObservation) { failInitialObservation = false; throw new Error("fixture observation unavailable"); }
       return {
         ...(branchCommit === undefined ? {} : { branchCommit }),
         ...(pullRequest === undefined ? {} : { pullRequest: structuredClone(pullRequest) }),
@@ -300,9 +341,15 @@ test("durable publication resumes ambiguous push and PR creation without duplica
   } as const;
   const first = new DurablePublicationCoordinator({ store, remote, now: () => "2026-08-09T12:00:00.000Z" });
   await first.prepare(input);
-  const afterPushTimeout = await first.advance("publication_1", {
+  const afterInitialObservationFailure = await first.advance("publication_1", {
     currentBasisId: input.basis.id,
     approval: { basisId: input.basis.id, confirmation: "publish-previewed-basis" },
+  });
+  assert.equal(afterInitialObservationFailure.state, "reconciling");
+  assert.equal(afterInitialObservationFailure.lastError, "Initial GitHub publication observation failed");
+  assert.equal(pushes, 0);
+  const afterPushTimeout = await first.advance("publication_1", {
+    currentBasisId: input.basis.id,
   });
   assert.equal(afterPushTimeout.state, "reconciling");
   assert.equal(pushes, 1);
@@ -351,6 +398,81 @@ test("publication renewal fails closed on a changed basis and GitHub-only merge 
   observed.pullRequest = { ...observed.pullRequest!, state: "merged" };
   const delivered = await coordinator.reconcile("publication_2", basisId);
   assert.equal(delivered.state, "delivered");
+});
+
+test("deterministic publication observation corruption blocks before remote effects", async () => {
+  let record: DurablePublicationRecord | undefined;
+  let remoteEffects = 0;
+  const store: DurablePublicationStore = {
+    async load() { return record ? structuredClone(record) : undefined; },
+    async save(value) { record = structuredClone(value); },
+    async withLock(_id, operation) { return operation(); },
+  };
+  const remote: GitHubPublicationStateAdapter = {
+    async observe() { throw new PublicationObservationIntegrityError(); },
+    async push() { remoteEffects += 1; },
+    async createDraftPullRequest() { remoteEffects += 1; return "https://github.com/acme/app/pull/9"; },
+  };
+  const coordinator = new DurablePublicationCoordinator({ store, remote });
+  const basisId = `sha256:${"a".repeat(64)}` as const;
+  await coordinator.prepare({
+    id: "publication_corrupt_observation",
+    changeId: "change_corrupt_observation",
+    basis: { id: basisId, workspaceTreeId: `sha256:${"b".repeat(64)}`, repositoryAnchorId: `sha256:${"c".repeat(64)}`, reviewId: `sha256:${"d".repeat(64)}`, checkReceiptIds: [] },
+    repositoryUrl: "https://github.com/acme/app",
+    baseBranch: "main",
+    branch: "veil/corrupt-observation",
+    commit: "e".repeat(40),
+    title: "Reject corrupt observation",
+  });
+
+  const blocked = await coordinator.advance("publication_corrupt_observation", {
+    currentBasisId: basisId,
+    approval: { basisId, confirmation: "publish-previewed-basis" },
+  });
+  assert.equal(blocked.state, "blocked");
+  assert.equal(blocked.lastError, "GitHub publication observation failed integrity validation");
+  assert.equal(remoteEffects, 0);
+});
+
+test("post-push observation corruption blocks while preserving the remote-effect boundary", async () => {
+  let record: DurablePublicationRecord | undefined;
+  let observations = 0;
+  let pushes = 0;
+  const store: DurablePublicationStore = {
+    async load() { return record ? structuredClone(record) : undefined; },
+    async save(value) { record = structuredClone(value); },
+    async withLock(_id, operation) { return operation(); },
+  };
+  const remote: GitHubPublicationStateAdapter = {
+    async observe() {
+      observations += 1;
+      if (observations === 2) throw new PublicationObservationIntegrityError();
+      return {};
+    },
+    async push() { pushes += 1; },
+    async createDraftPullRequest() { return "https://github.com/acme/app/pull/10"; },
+  };
+  const coordinator = new DurablePublicationCoordinator({ store, remote });
+  const basisId = `sha256:${"a".repeat(64)}` as const;
+  await coordinator.prepare({
+    id: "publication_post_push_corruption",
+    changeId: "change_post_push_corruption",
+    basis: { id: basisId, workspaceTreeId: `sha256:${"b".repeat(64)}`, repositoryAnchorId: `sha256:${"c".repeat(64)}`, reviewId: `sha256:${"d".repeat(64)}`, checkReceiptIds: [] },
+    repositoryUrl: "https://github.com/acme/app",
+    baseBranch: "main",
+    branch: "veil/post-push-corruption",
+    commit: "e".repeat(40),
+    title: "Block corrupt post-push observation",
+  });
+
+  const blocked = await coordinator.advance("publication_post_push_corruption", {
+    currentBasisId: basisId,
+    approval: { basisId, confirmation: "publish-previewed-basis" },
+  });
+  assert.equal(pushes, 1);
+  assert.equal(blocked.state, "blocked");
+  assert.equal(blocked.lastError, "Post-effect GitHub publication observation failed integrity validation");
 });
 
 test("Git patch hunks become stable, independently assignable Work Fragments", () => {
